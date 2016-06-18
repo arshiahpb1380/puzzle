@@ -1,6 +1,6 @@
 # LaytonPuzzleBot
 A Telegram Bot that shows random puzzles from the Professor Layton game series.
-Avalibale under https://telegram.me/LaytonPuzzleBot (may not work)
+Avalibale under https://telegram.me/LaytonPuzzleBot (may not work).
 
 ## Installation
 You can eather use https://telegram.me/LaytonPuzzleBot (may not work) or set up youre own Telegram bot.
