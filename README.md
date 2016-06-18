@@ -1,4 +1,4 @@
-# ${1:Project Name}
+# LaytonPuzzleBot
 A Telegram Bot that shows random puzzles from the Professor Layton game series.
 Avalibale under https://telegram.me/LaytonPuzzleBot (may not work)
 
@@ -16,10 +16,10 @@ Programing: @SeproDE
 German Translation: Hoi-Fai
 
 ## TODO:
--Implement Puzzles :(
--Use Real CSV(seperated by commas(,) and not by pipes(|))
--Better Message Processing
--Better description of the installation process
+- Implement Puzzles :(
+- Switch to real CSV(seperated by commas(,) and not by pipes(|))
+- Better message processing
+- Better description of the installation process
 
 ## Additional Links:
 Language Spreadsheet: https://docs.google.com/spreadsheets/d/1fmRfjtnTo3lnISArhdyQP9rIch81oOzkAUEZ6iiWGI8
