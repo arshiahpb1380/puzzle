@@ -17,7 +17,7 @@ You can eather use [@LaytonPuzzleBot](https://telegram.me/LaytonPuzzleBot) (may 
 - Translation:
   - German: Hoi-Fai, @SeproDE 
 
-## TODO:
+## To-Do:
 - Implement Hints
 - Implement German Puzzles
 - Better message processing
