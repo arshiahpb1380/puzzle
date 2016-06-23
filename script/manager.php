@@ -1,43 +1,152 @@
 <?php
-//creates a new entry in the ptbDatabese: chatid|language|person|state|puzzleid|hint
+//creates a new entry in the databese: chatid|language|person|state|puzzleid|hint
 function newEntry($userId) {
-	ptb_add('data.csv', 'L', $userId . '|2|0|0|0|0');
+	$file = 'data.csv';
+	$current = file_get_contents($file);
+	$current .= PHP_EOL .$userId . ',2,0,0,0,0';
+	file_put_contents($file, $current);
 }
 
 //deletes a entry based on the chatid
 function deleteEntry($userId) {
-	ptb_delete('data.csv', 'L', "'chatid' == $userId");
+	$changingLine = findEntry('chatid', $userId);
+	
+	if ($changingLine == null)return;
+	
+	$input = fopen('data.csv', 'r');
+	$output = fopen('temporary.csv', 'w');
+	
+	$line = 0;
+	while ($row = fgetcsv($input)) {
+		if ($line != $changingLine) {         
+			fputcsv($output, $row);  
+		}
+		$line++;
+	}
+
+	//close
+	fclose($input);
+	fclose($output);
+
+	unlink('data.csv');// Delete
+	rename('temporary.csv', 'data.csv'); //Rename temporary
 }
 
 //updates a entry
-function updateEntry($userId, $name, $value) {
-	ptb_update('data.csv', 'L', "'chatid' == $userId", "'$name' ='$value'");
+function updateEntry($userId, $name, $value) {	
+	$changingLine = findEntry('chatid', $userId);
+	if ($changingLine == null)return;
+	$searchedRow = 0;
+	
+	$input = fopen('data.csv', 'r');
+	$output = fopen('temporary.csv', 'w');
+	
+	$data = fgetcsv($input);
+	$num = count($data);
+	for ($c=0; $c < $num; $c++){
+		if($data[$c] == $name){
+			$searchedRow = $c;
+		}
+	}
+	fputcsv($output, $data);
+	
+	$line = 1;
+	while ($row = fgetcsv($input)) {
+		if ($line == $changingLine) {         
+			$row[$searchedRow] = $value;        
+		}
+		$line++;
+		fputcsv($output, $row);  
+	}
+
+	//close
+	fclose($input);
+	fclose($output);
+
+	unlink('data.csv');// Delete
+	rename('temporary.csv', 'data.csv'); //Rename temporary
+}
+
+//finds line of entry
+function findEntry($term, $value){
+	$line = 1;
+	$searchedRow = 0;
+	
+	if (($handle = fopen("data.csv", "r")) != false) {
+		$data = fgetcsv($handle);
+		$num = count($data);
+		
+		for ($c=0; $c < $num; $c++) {
+			if($data[$c] == $term){
+				$searchedRow = $c;
+			}
+		}
+		
+		while (($data = fgetcsv($handle)) != false) {
+			
+			if($data[$searchedRow] == $value){
+				fclose($handle);
+				return $line;
+			}
+			$line++;
+		}
+		fclose($handle);
+	}
+}
+
+//return entry
+function getEntry($term, $value, $db){
+	$searchedRow = 0;
+	$csvHeader = array();
+	$response = array();
+	
+	if (($handle = fopen($db, "r")) != false) {
+		$data = fgetcsv($handle);
+		$num = count($data);
+		for ($c=0; $c < $num; $c++) {
+			if($data[$c] == $term){
+				$searchedRow = $c;
+				$csvHeader = $data;
+			}
+		}
+		while (($data = fgetcsv($handle)) != false) {
+			if($data[$searchedRow] == $value)
+			{
+				for ($c=0; $c < $num; $c++) {
+					$response[$csvHeader[$c]] = $data[$c];
+				}
+				fclose($handle);
+				return $response;
+			}
+		}
+		fclose($handle);
+	}
 }
 
 function getAnswerSnipet($person, $correct, $language){
-	$responseLang = ptb_connect('lang/response.csv', 'L');
-	
+
+	getEntry('Person', $selcted, 'lang/response.csv');
 	if($person == 1){//layton
 		if($correct){//corect answer
 			$selcted = 'layton_r'.sprintf("%02d", rand(1, 29));
-			$langResponse = ptb_select($responseLang, "isThere('Person', '$selcted')");
+			$langResponse = getEntry('Person', $selcted, 'lang/response.csv');
 		}else{//wrong answer
 			$selcted = 'layton_w'.sprintf("%02d", rand(1, 27));
-			$langResponse = ptb_select($responseLang, "isThere('Person', '$selcted')");
+			$langResponse = getEntry('Person', $selcted, 'lang/response.csv');
 		}
 	}else if($person == 2){//luke
 		if($correct){//corect answer
 			$selcted = 'luke_r'.sprintf("%02d", rand(1, 27));
-			$langResponse = ptb_select($responseLang, "isThere('Person', '$selcted')");
+			$langResponse = getEntry('Person', $selcted, 'lang/response.csv');
 		}else{//wrong answer
 			$selcted = 'luke_w'.sprintf("%02d", rand(1, 27));
-			$langResponse = ptb_select($responseLang, "isThere('Person', '$selcted')");
+			$langResponse = getEntry('Person', $selcted, 'lang/response.csv');
 		}
 	}
 	if ($language == 0){
-		return $langResponse[0]['English'];
+		return $langResponse['English'];
 	}else if($language == 1){
-		return $langResponse[0]['German'];
+		return $langResponse['German'];
 	}
 	
 }
@@ -60,22 +169,21 @@ function getLang($identifier, $language){
 	}
 	
 	//loads language file
-	$interfaceLang = ptb_connect('lang/interface.csv', 'L');
 	
 	if((is_array($identifier) or ($identifier instanceof Traversable))) {
 		//checks if array(button)
 		foreach ($identifier as &$value) {
 			foreach ($value as &$subvalue) {//opens array inside the array
-				$langfound = ptb_select($interfaceLang, "isThere('identifier', '$subvalue')");//get the entry for the identifier
+				$langfound = getEntry('identifier', $subvalue, 'lang/interface.csv');
 				
 				if($langfound != null){
 					if ($language == 0) {
-						$subvalue = str_replace("\\n", "\n" ,$langfound[0]['English']);//returns english version and replaces \\n with \n
+						$subvalue = str_replace("\\n", "\n" ,$langfound['English']);//returns english version and replaces \\n with \n
 					}
 					else if ($language == 1) {
-						$subvalue = str_replace("\\n", "\n" ,$langfound[0]['German']);//returns german version and replaces \\n with \n
+						$subvalue = str_replace("\\n", "\n" ,$langfound['German']);//returns german version and replaces \\n with \n
 					}else if ($language == 2){
-						$subvalue = str_replace("\\n", "\n" ,$langfound[0]['Emoji']);//returns emoji version and replaces \\n with \n
+						$subvalue = str_replace("\\n", "\n" ,$langfound['Emoji']);//returns emoji version and replaces \\n with \n
 					}else{
 						$subvalue = str_replace("\\n", "\n" ,$subvalue);
 					}
@@ -86,16 +194,16 @@ function getLang($identifier, $language){
 		}
 		return $identifier;
 	}else{//same thing but only if its not an array(normal text)
-		$langfound = ptb_select($interfaceLang, "isThere('identifier', '$identifier')");
+		$langfound = getEntry('identifier', $identifier, 'lang/interface.csv');
 		if($langfound != null){
 			if ($language == 0) {
-				return str_replace("\\n", "\n" ,$langfound[0]['English']);
+				return str_replace("\\n", "\n" ,$langfound['English']);
 			}
 			else if ($language == 1) {
-				return str_replace("\\n", "\n" ,$langfound[0]['German']);
+				return str_replace("\\n", "\n" ,$langfound['German']);
 			}
 			else if ($language == 2){
-				return str_replace("\\n", "\n" , $langfound[0]['Emoji']);
+				return str_replace("\\n", "\n" , $langfound['Emoji']);
 			}
 			else{
 				return str_replace("\\n", "\n" , $identifier);

@@ -1,28 +1,27 @@
-<?php die('Access denied!');?>
-identifier|English|German|Emoji
-info_welcome|Language was set to English.\nYou can always change the Language in the Settings under /settings.\n\nPuzzle data from: layton.wikia.com|Die Sprache wurde auf Deutsch gestellt.\nDu kannst die Sprache jederzeit in den Einstellungen unter /settings ändern.\n\nPuzzle Daten kommen von: layton.wikia.com|
-info_stopBot|If you stop this Bot all data will be lost!\nDo you want to continue?|Wenn du diesen Bot abbestellst werden alle Daten gelöscht!\nMöchtest du fortfahren?|
-info_botStoped|All youre data has been deleted!\nUse /start to restart the bot.|Alle deine Daten wurden gelöscht!\nNutze /start um den Bot neu zu starten.|
-info_botNotStoped|Glad to see you stay!|Schön, dass du uns nicht verlässt!|
-info_settings|What do you want to change?|Was möchtest du verändern?|
-info_language|Language?|Sprache?|🌍?
-info_person|Person?|Person?|
-info_settingsChanged|Settings Changed.\nWhat do you want to change?|Einstellungen Gespeichert.\nWas möchtest du verändern?|
-info_ready|Are you ready for another Puzzle?|Bist du bereit für ein weiteres Puzzle?|
-error_noEntry|You should first use /start to start this bot.||
-error_entryExists|I think we alredy met.|Ich glaube wir sind uns schonmal begegnet.|
-error_noContext|I don't quite understand.|Ich verstehe nicht ganz...|
-error_noTextMsg|I only understand text messages|Ich verstehe nur Textnachrichten|
-btn_german|German - 🇩🇪|Deutsch - 🇩🇪|🇩🇪
-btn_english|English - 🇬🇧|Englisch - 🇬🇧|🇬🇧
-btn_yes|Yes|Ja|👍🏻
-btn_no|No|Nein|👎🏻
-btn_language|Language|Sprache|
-btn_person|Person|Person|
-btn_stopBot|Stop Bot|Bot beenden|
-btn_close|Exit|Schließen|
-btn_layton|Layton - 🎩|Layton - 🎩|🎩
-btn_luke|Luke|Luke|
-btn_random|Random|Zufällig|
-btn_settings|/settings|/settings|
-btn_help|I may need some help|Ich brauche etwas hilfe|
+identifier,English,German,Emoji
+info_welcome,Language was set to English.\nYou can always change the Language in the Settings under /settings.,Die Sprache wurde auf Deutsch gestellt.\nDu kannst die Sprache jederzeit in den Einstellungen unter /settings ändern.,
+info_stopBot,If you stop this Bot all data will be lost!\nDo you want to continue?,Wenn du diesen Bot abbestellst werden alle Daten gelöscht!\nMöchtest du fortfahren?,
+info_botStoped,All youre data has been deleted!\nUse /start to restart the bot.,Alle deine Daten wurden gelöscht!\nNutze /start um den Bot neu zu starten.,
+info_botNotStoped,Glad to see you stay!,"Schön, dass du uns nicht verlässt!",
+info_settings,What do you want to change?,Was möchtest du verändern?,
+info_language,Language?,Sprache?,🌍?
+info_person,Person?,Person?,
+info_settingsChanged,Settings Changed.\nWhat do you want to change?,Einstellungen Gespeichert.\nWas möchtest du verändern?,
+info_ready,Are you ready for another Puzzle?,Bist du bereit für ein weiteres Puzzle?,
+error_noEntry,You should first use /start to start this bot.,,
+error_entryExists,I think we alredy met.,Ich glaube wir sind uns schonmal begegnet.,
+error_noContext,I don't quite understand.,Ich verstehe nicht ganz...,
+error_noTextMsg,I only understand text messages,Ich verstehe nur Textnachrichten,
+btn_german,German - 🇩🇪,Deutsch - 🇩🇪,🇩🇪
+btn_english,English - 🇬🇧,Englisch - 🇬🇧,🇬🇧
+btn_yes,Yes,Ja,👍🏻
+btn_no,No,Nein,👎🏻
+btn_language,Language,Sprache,
+btn_person,Person,Person,
+btn_stopBot,Stop Bot,Bot beenden,
+btn_close,Exit,Schließen,
+btn_layton,Layton - 🎩,Layton - 🎩,🎩
+btn_luke,Luke,Luke,
+btn_random,Random,Zufällig,
+btn_settings,/settings,/settings,
+btn_help,I may need some help,Ich brauche etwas hilfe,

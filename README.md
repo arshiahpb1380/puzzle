@@ -19,7 +19,6 @@ You can eather use [@LaytonPuzzleBot](https://telegram.me/LaytonPuzzleBot) (may 
 
 ## TODO:
 - Implement Hints
-- Switch to real CSV(seperated by commas(,) and not by pipes(|))
 - Better message processing
 - Better documentation and code comments
 

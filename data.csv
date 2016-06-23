@@ -1,2 +1,2 @@
-<?php die('Access denied!');?>
-chatid|language|person|state|puzzleid|hint
+chatid,language,person,state,puzzleid,hint
+202723989,0,0,6,27,0

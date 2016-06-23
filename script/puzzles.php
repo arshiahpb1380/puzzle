@@ -1,9 +1,8 @@
 <?php
 //selects randomly a new puzzle
 function newPuzzle(){
-$puzzleList = ptb_connect('puzzles.csv', 'L');
 
-$puzzleAmount = ptb_count($puzzleList); 
+$puzzleAmount = 30; 
 
 $newPuzzleID = mt_rand(1, $puzzleAmount);
 
@@ -11,19 +10,18 @@ return $newPuzzleID;
 }
 //gets the puzzle Type
 function getPuzzleType($id){
-	$puzzleList = ptb_connect('puzzles.csv', 'L');
+
 	
-	$found = ptb_select($puzzleList, "isThere('ID', '$id,')");
+	$found = getEntry('ID', $id, 'puzzles.csv');
 	
-	return $found[0]['Type'];
+	return $found['Type'];
 }
 //gets the Puzzle Solution
 function getPuzzleSolution($id){
-	$puzzleList = ptb_connect('puzzles.csv', 'L');
 	
-	$found = ptb_select($puzzleList, "isThere('ID', '$id,')");
+	$found = getEntry('ID', $id, 'puzzles.csv');
 	
-	return $found[0]['Solution'];
+	return $found['Solution'];
 }
 //get a string between 2 other strings. Taken from: http://www.justin-cook.com/
 function get_string_between($string, $start, $end){
@@ -36,11 +34,10 @@ function get_string_between($string, $start, $end){
 }
 //get data from mediaWiki Api
 function getApiResponse($id){
-	$puzzleList = ptb_connect('puzzles.csv', 'L');
 	
-	$found = ptb_select($puzzleList, "isThere('ID', '$id,')");
+	$found = getEntry('ID', $id, 'puzzles.csv');
 	
-	$url = 'http://layton.wikia.com/api.php?format=json&action=parse&prop=wikitext&pageid='.$found[0]['English'];
+	$url = 'http://layton.wikia.com/api.php?format=json&action=parse&prop=wikitext&pageid='.$found['English'];
 	$response = file_get_contents($url);
 	
 	$content = json_decode($response, true)['parse'];
@@ -131,13 +128,12 @@ function encodeImageURL($filename){
 }
 
 function puzzleHandler($chat_id, $userMsg){
-	$myDatabase = ptb_connect('data.csv', 'L');
-	$found = ptb_select($myDatabase, "isThere('chatid', '$chat_id')");
+	$found = getEntry('chatid', $chat_id, 'data.csv');
 	
-	$language = $found[0]['language'];
+	$language = $found['language'];
 
 	
-	if ($found[0]['state'] == 4){
+	if ($found['state'] == 4){
 		if($userMsg != "Yes" and $userMsg != "Ja"){
 			sendKeyboardMessage($chat_id, "info_ready", $language, array(array('btn_yes'),array('btn_settings')));
 		}else{
@@ -145,18 +141,18 @@ function puzzleHandler($chat_id, $userMsg){
 			
 			sendChatAction($chat_id, 'upload_image');
 			
-			if($found[0]['puzzleid'] == 0){
+			if($found['puzzleid'] == 0){
 				$puzzleId = newPuzzle();
 				updateEntry($chat_id, "puzzleid", $puzzleId);
 				sendPuzzle($chat_id, $puzzleId, $language);
 				
 			}else{
-				$puzzleId = $found[0]['puzzleid'];
+				$puzzleId = $found['puzzleid'];
 				sendPuzzle($chat_id, $puzzleId, $language);
 			}
 		}
-	}else if($found[0]['state'] == 6){
-		$puzzleId = $found[0]['puzzleid'];
+	}else if($found['state'] == 6){
+		$puzzleId = $found['puzzleid'];
 		$response = getApiResponse($puzzleId);
 		
 		//filter
@@ -170,7 +166,7 @@ function puzzleHandler($chat_id, $userMsg){
 		if($userMsg == getPuzzleSolution($puzzleId)){//right answer
 			sendChatAction($chat_id, 'upload_video');
 			
-			$person = $found[0]['person'];
+			$person = $found['person'];
 			if ($person == 0){
 				$person = rand(1, 2);
 			}
@@ -217,7 +213,7 @@ function puzzleHandler($chat_id, $userMsg){
 			updateEntry($chat_id, "state", 4);
 			sendKeyboardMessage($chat_id, "info_ready", $language, array(array('btn_yes'),array('btn_settings')));
 		}else if($userMsg == "I may need some help" or $userMsg == "Ich brauche etwas hilfe"){//HELP
-			$puzzleId = $found[0]['puzzleid'];
+			$puzzleId = $found['puzzleid'];
 			
 			$btnHelp = getLang("btn_help", $language);
 			
@@ -246,7 +242,7 @@ function puzzleHandler($chat_id, $userMsg){
 			//wrong answer
 			sendChatAction($chat_id, 'upload_video');
 			
-			$puzzleId = $found[0]['puzzleid'];
+			$puzzleId = $found['puzzleid'];
 			
 			$btnHelp = getLang("btn_help", $language);
 			
@@ -270,7 +266,7 @@ function puzzleHandler($chat_id, $userMsg){
 				$keyboard = array(array('A', 'B', 'C'), array('D', 'E', 'F'), array($btnHelp));
 			}
 			
-			$person = $found[0]['person'];
+			$person = $found['person'];
 			if ($person == 0){
 				$person = rand(1, 2);
 			}
