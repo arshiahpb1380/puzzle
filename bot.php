@@ -92,7 +92,7 @@ function apiRequest($method, $parameters) {
   curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);
   curl_setopt($handle, CURLOPT_TIMEOUT, 60);
-
+  
   return exec_curl_request($handle);
 }
 
@@ -117,7 +117,6 @@ function apiRequestJson($method, $parameters) {
   curl_setopt($handle, CURLOPT_TIMEOUT, 60);
   curl_setopt($handle, CURLOPT_POSTFIELDS, json_encode($parameters));
   curl_setopt($handle, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-
   return exec_curl_request($handle);
 }
 

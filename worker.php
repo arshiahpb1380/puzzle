@@ -1,7 +1,8 @@
-<?php
+﻿<?php
 //uses PJJtextbase for now(http://www.pjj.pl/pjjtextbase/)
 require 'script/pjjtextbase.php';
 require 'script/manager.php';
+require 'script/puzzles.php';
 
 //Warning! Super messy undocumented code ahead...
 function processMessage($message) {
@@ -33,7 +34,8 @@ if (isset($message['text'])) {
 			updateEntry($chat_id, "language", "0");
 			sendMessage($chat_id, "info_welcome", 0);
 		}
-	}else if ($found[0]['state'] == 0){
+		puzzleHandler($chat_id, $text);
+	}else if ($found[0]['state'] == 0){	
 		sendKeyboardMessage($chat_id, "info_language", $found[0]['language'], array(array('btn_german', 'btn_english')));
 	}else if ($text == "/stop"){
 		updateEntry($chat_id, "state", "5");
@@ -45,6 +47,7 @@ if (isset($message['text'])) {
 		}else if($text == "No" or $text == "Nein"){
 			updateEntry($chat_id, "state", "4");
 			sendMessage($chat_id, "info_botNotStoped", $found[0]['language']);
+			puzzleHandler($chat_id, $text);
 		}else{
 			updateEntry($chat_id, "state", "5");
 			sendKeyboardMessage($chat_id, "info_stopBot", $found[0]['language'], array(array('btn_yes', 'btn_no')));
@@ -63,8 +66,8 @@ if (isset($message['text'])) {
 			updateEntry($chat_id, "state", "5");
 			sendKeyboardMessage($chat_id, "info_stopBot", $found[0]['language'], array(array('btn_yes', 'btn_no')));
 		}else if($text == "Exit" or $text == "Schließen"){
-			apiRequestJson("sendMessage", array('chat_id' => $chat_id, "text" => 'PUZZLE', 'reply_markup' => array('hide_keyboard' => true)));
 			updateEntry($chat_id, "state", "4");
+			puzzleHandler($chat_id, $text);
 		}else {
 			sendKeyboardMessage($chat_id, "info_settings", $found[0]['language'], array(array('btn_language', 'btn_person'), array('btn_stopBot', 'btn_close')));
 		}
@@ -97,6 +100,8 @@ if (isset($message['text'])) {
 		}else{
 			sendKeyboardMessage($chat_id, "info_language", $found[0]['language'], array(array('btn_german', 'btn_english')));
 		}
+	}else if ($found[0]['state'] == 4 or $found[0]['state'] == 6){
+		puzzleHandler($chat_id, $text);
 	}else {
 		sendMessage($chat_id, "error_noContext", $found[0]['language']);
 	}
