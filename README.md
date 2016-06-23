@@ -19,8 +19,10 @@ You can eather use [@LaytonPuzzleBot](https://telegram.me/LaytonPuzzleBot) (may 
 
 ## TODO:
 - Implement Hints
+- Implement German Puzzles
 - Better message processing
 - Better documentation and code comments
+- More Puzzle
 
 ## Additional Links:
 [Data Spreadsheet](https://docs.google.com/spreadsheets/d/1fmRfjtnTo3lnISArhdyQP9rIch81oOzkAUEZ6iiWGI8)
