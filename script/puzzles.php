@@ -206,6 +206,9 @@ function puzzleHandler($chat_id, $userMsg){
 			
 			if (!file_exists($picDir . "/" . $imageName)){
 				$currentImageName = substr(strrchr($imageURL, '/'), 1);
+				if(!file_exists($picDir)){
+					exec("mkdir $picDir");
+				}
 				exec("cd $picDir && wget --quiet $imageURL && mv $currentImageName $imageName");
 			}
 			sendImage($chat_id, $picDir . '/' . $imageName);
@@ -339,8 +342,12 @@ function sendPuzzle($chat_id, $puzzleId, $language){
 			
 		if (!file_exists($picDir . "/" . $imageName)){
 			$currentImageName = substr(strrchr($imageURL, '/'), 1);
-		
+			if (!file_exists($picDir)){
+				exec("mkdir $picDir");
+			}
 			exec("cd $picDir && wget --quiet $imageURL && mv $currentImageName $imageName");
+				
+			
 		}
 		
 		sendMarkdownMessage($chat_id, "*" . $title . ":*", 99);
