@@ -93,7 +93,9 @@ function findEntry($term, $value){
 		fclose($handle);
 	}
 }
-
+function countFile($db){
+  return count(file($db))-1; 
+}
 //return entry
 function getEntry($term, $value, $db){
 	$searchedRow = 0;
@@ -125,7 +127,6 @@ function getEntry($term, $value, $db){
 
 function getAnswerSnipet($person, $correct, $language){
 
-	getEntry('Person', $selcted, 'lang/response.csv');
 	if($person == 1){//layton
 		if($correct){//corect answer
 			$selcted = 'layton_r'.sprintf("%02d", rand(1, 29));

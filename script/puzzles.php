@@ -2,7 +2,7 @@
 //selects randomly a new puzzle
 function newPuzzle(){
 
-$puzzleAmount = 30; 
+$puzzleAmount = countFile('puzzles.csv'); 
 
 $newPuzzleID = mt_rand(1, $puzzleAmount);
 
