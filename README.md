@@ -14,6 +14,7 @@ You can eather use [@LaytonPuzzleBot](https://telegram.me/LaytonPuzzleBot) (may 
 ## Credits
 - Programing: @SeproDE 
 - Puzzle Data: [Layton Wikia](http://layton.wikia.com/)
+- Layton/Luke Quotes: [Layton Neoseeker Wiki](http://layton.neoseeker.com/wiki/)
 - Translation:
   - German: Hoi-Fai, @SeproDE 
 
