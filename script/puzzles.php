@@ -51,6 +51,7 @@ function getPuzzleImage($response){
 	$nResponse = str_replace("]]","",$nResponse);
 	$nResponse = str_replace("\n","",$nResponse);
 	$nResponse = str_replace("File:","",$nResponse);
+	$nResponse = str_replace(" ","_",$nResponse);
 	
 	$a = get_string_between($nResponse, '|image', '|');
 	
@@ -95,6 +96,8 @@ function getPuzzleIncorrect($response){
 	return $b;
 }
 function getSolutionImage($response){
+	$response = str_replace(" ","_",$response);
+	
 	$a = get_string_between($response, '>[[Image:', ']]');
 	$b = get_string_between($response, '[[Image:', '|center]]');
 	$c = get_string_between($response, '[[File:', '|center]]');
