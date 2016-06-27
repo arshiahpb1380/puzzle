@@ -8,6 +8,7 @@ info_language,Language?,Sprache?,🌍?
 info_person,Person?,Person?,
 info_settingsChanged,Settings Changed.\nWhat do you want to change?,Einstellungen Gespeichert.\nWas möchtest du verändern?,
 info_ready,Are you ready for another Puzzle?,Bist du bereit für ein weiteres Puzzle?,
+error_notInPuzzle,"You can't skip a Puzzle, if you arent solving one.","Du kannst ein Puzzle nicht überspringen, wenn du grade gar keins löst.",
 error_noEntry,You should first use /start to start this bot.,,
 error_entryExists,I think we alredy met.,Ich glaube wir sind uns schonmal begegnet.,
 error_noContext,I don't quite understand.,Ich verstehe nicht ganz...,

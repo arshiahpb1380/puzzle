@@ -35,6 +35,14 @@ if (isset($message['text'])) {
 		puzzleHandler($chat_id, $text);
 	}else if ($found['state'] == 0){	
 		sendKeyboardMessage($chat_id, "info_language", $found['language'], array(array('btn_german', 'btn_english')));
+	}else if ($text == "/skip"){
+		if($found['state'] == 6){
+			updateEntry($chat_id, "puzzleid", 0);
+			updateEntry($chat_id, "state", 4);
+			puzzleHandler($chat_id, $text);
+		}else{
+			sendMessage($chat_id, "error_notInPuzzle", 1);
+		}
 	}else if ($text == "/stop"){
 		updateEntry($chat_id, "state", "5");
 		sendKeyboardMessage($chat_id, "info_stopBot", $found['language'], array(array('btn_yes', 'btn_no')));

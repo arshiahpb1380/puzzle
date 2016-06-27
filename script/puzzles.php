@@ -137,7 +137,7 @@ function puzzleHandler($chat_id, $userMsg){
 
 	
 	if ($found['state'] == 4){
-		if($userMsg != "Yes" and $userMsg != "Ja"){
+		if($userMsg != "Yes" and $userMsg != "Ja" and $userMsg != "/skip"){
 			sendKeyboardMessage($chat_id, "info_ready", $language, array(array('btn_yes'),array('btn_settings')));
 		}else{
 			updateEntry($chat_id, "state", "6");
