@@ -2,7 +2,7 @@
 require('worker.php');
 
 //Token for Telegram Bot API
-define('BOT_TOKEN', 'INSERT API TOKEN');
+define('BOT_TOKEN', '257095692:AAGwlrxvKA4X8Z1fKXNRLrs76EcgT8TAmfY');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 
 //URL for Webhook
